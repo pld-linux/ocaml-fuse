@@ -2,15 +2,15 @@
 # Conditional build:
 %bcond_with	opt		# build opt
 
-%define		modname	gapi-ocaml
+%define		modname	Fuse
 Summary:	%{modname} binding for OCaml
 Summary(pl.UTF-8):	Wiązania %{modname} dla OCamla
-Name:		ocaml-%{modname}
+Name:		ocaml-ocamlfuse
 Version:	2.7
 Release:	1
 License:	GPL v2
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/ocamlfuse/%{modname}-%{version}-1.tar.gz
+Source0:	http://downloads.sourceforge.net/ocamlfuse/ocamlfuse-%{version}-1.tar.gz
 # Source0-md5:	cb9cbe4fafb36ead1b78faaacc26f3e3
 URL:		http://sourceforge.net/apps/mediawiki/ocamlfuse/
 BuildRequires:	libfuse-devel
@@ -68,8 +68,8 @@ rm -rf $RPM_BUILD_ROOT
 cd lib
 
 install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/{%{modname},stublibs}
-install *.cm[ixa]* *.a dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/%{modname}
-install dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
+install -p *.cm[ixa]* *.a dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/%{modname}
+install -p dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
 
 install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/%{modname}
 cat > $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/%{modname}/META <<EOF
