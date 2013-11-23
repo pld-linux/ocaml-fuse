@@ -1,18 +1,16 @@
-# disable debug - not useful?
-%define debug_package %{nil}
-
 #
 # Conditional build:
 %bcond_with	opt		# build opt
 
-Summary:	ocamlfuse binding for OCaml
-Summary(pl.UTF-8):	Wiązania ocamlfuse dla OCamla
-Name:		ocaml-ocamlfuse
+%define		modname	gapi-ocaml
+Summary:	%{modname} binding for OCaml
+Summary(pl.UTF-8):	Wiązania %{modname} dla OCamla
+Name:		ocaml-%{modname}
 Version:	2.7
 Release:	1
 License:	GPL v2
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/ocamlfuse/ocamlfuse-%{version}-1.tar.gz
+Source0:	http://downloads.sourceforge.net/ocamlfuse/%{modname}-%{version}-1.tar.gz
 # Source0-md5:	cb9cbe4fafb36ead1b78faaacc26f3e3
 URL:		http://sourceforge.net/apps/mediawiki/ocamlfuse/
 BuildRequires:	libfuse-devel
@@ -21,6 +19,8 @@ BuildRequires:	ocaml-camlidl >= 1.0.5
 BuildRequires:	ocaml-findlib >= 1.4
 %requires_eq	ocaml-runtime
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		debug_package	%{nil}
 
 %description
 OcamlFuse is a binding to the high-level part of the fuse library,
@@ -57,7 +57,7 @@ tej biblioteki.
 
 %prep
 %setup -qc
-mv ocamlfuse/* .
+mv %{modname}/* .
 
 %build
 %{__make} all %{?with_opt:opt} -C lib \
@@ -67,17 +67,17 @@ mv ocamlfuse/* .
 rm -rf $RPM_BUILD_ROOT
 cd lib
 
-install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/{ocamlfuse,stublibs}
-install *.cm[ixa]* *.a dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/ocamlfuse
+install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/{%{modname},stublibs}
+install *.cm[ixa]* *.a dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/%{modname}
 install dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
 
-install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/ocamlfuse
-cat > $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/ocamlfuse/META <<EOF
+install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/%{modname}
+cat > $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/%{modname}/META <<EOF
 requires = ""
 version = "%{version}"
-directory = "+ocamlfuse"
-archive(byte) = "ocamlfuse.cma"
-archive(native) = "ocamlfuse.cmxa"
+directory = "+%{modname}"
+archive(byte) = "%{modname}.cma"
+archive(native) = "%{modname}.cmxa"
 linkopts = ""
 EOF
 
@@ -87,13 +87,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/ocaml/stublibs/*.so
-%dir %{_libdir}/ocaml/ocamlfuse
-%attr(755,root,root) %{_libdir}/ocaml/ocamlfuse/dll*_stubs.so
+%dir %{_libdir}/ocaml/%{modname}
+%attr(755,root,root) %{_libdir}/ocaml/%{modname}/dll*_stubs.so
 
 %files devel
 %defattr(644,root,root,755)
 %doc LICENSE lib/*.mli
-%dir %{_libdir}/ocaml/ocamlfuse
-%{_libdir}/ocaml/ocamlfuse/*.cm[ixa]*
-%{_libdir}/ocaml/ocamlfuse/*.a
-%{_libdir}/ocaml/site-lib/ocamlfuse
+%dir %{_libdir}/ocaml/%{modname}
+%{_libdir}/ocaml/%{modname}/*.cm[ixa]*
+%{_libdir}/ocaml/%{modname}/*.a
+%{_libdir}/ocaml/site-lib/%{modname}
