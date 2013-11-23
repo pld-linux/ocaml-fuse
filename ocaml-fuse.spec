@@ -5,7 +5,7 @@
 %define		modname	Fuse
 Summary:	%{modname} binding for OCaml
 Summary(pl.UTF-8):	Wiązania %{modname} dla OCamla
-Name:		ocaml-ocamlfuse
+Name:		ocaml-fuse
 Version:	2.7
 Release:	1
 License:	GPL v2
@@ -57,10 +57,10 @@ tej biblioteki.
 
 %prep
 %setup -qc
-mv %{modname}/* .
+mv ocamlfuse/* .
 
 %build
-%{__make} all %{?with_opt:opt} -C lib \
+%{__make} -j1 all %{?with_opt:opt} -C lib \
 	CC="%{__cc} %{rpmcflags} -fPIC"
 
 %install
