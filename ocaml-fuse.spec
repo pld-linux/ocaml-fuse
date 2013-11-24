@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with	opt		# build opt
+%bcond_without	opt		# build opt
 
 %define		modname	Fuse
 Summary:	%{modname} binding for OCaml
@@ -15,8 +15,8 @@ Source0:	http://downloads.sourceforge.net/ocamlfuse/ocamlfuse-%{version}-1.tar.g
 URL:		http://sourceforge.net/apps/mediawiki/ocamlfuse/
 BuildRequires:	libfuse-devel
 BuildRequires:	ocaml >= 3.08
-BuildRequires:	ocaml-camlidl >= 1.0.5
 BuildRequires:	ocaml-findlib >= 1.4
+BuildRequires:	ocaml-idl-devel >= 1.0.5
 %requires_eq	ocaml-runtime
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -60,7 +60,7 @@ tej biblioteki.
 mv ocamlfuse/* .
 
 %build
-%{__make} -j1 all %{?with_opt:opt} -C lib \
+%{__make} -j1 all -C lib \
 	CC="%{__cc} %{rpmcflags} -fPIC"
 
 %install
