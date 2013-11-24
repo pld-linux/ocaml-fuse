@@ -61,6 +61,7 @@ mv ocamlfuse/* .
 
 %build
 %{__make} -j1 all -C lib \
+	PACKS=camlidl \
 	CC="%{__cc} %{rpmcflags} -fPIC"
 
 %install
