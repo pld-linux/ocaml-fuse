@@ -68,7 +68,7 @@ rm -rf $RPM_BUILD_ROOT
 cd lib
 
 install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/{%{modname},stublibs}
-install -p *.cm[ixa]* *.a dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/%{modname}
+install -p *.cm[ixa]* *.a $RPM_BUILD_ROOT%{_libdir}/ocaml/%{modname}
 install -p dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
 
 install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/%{modname}
@@ -87,8 +87,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/ocaml/stublibs/*.so
-%dir %{_libdir}/ocaml/%{modname}
-%attr(755,root,root) %{_libdir}/ocaml/%{modname}/dll*_stubs.so
 
 %files devel
 %defattr(644,root,root,755)
