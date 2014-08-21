@@ -7,7 +7,7 @@ Summary:	%{modname} binding for OCaml
 Summary(pl.UTF-8):	Wiązania %{modname} dla OCamla
 Name:		ocaml-fuse
 Version:	2.7
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/ocamlfuse/ocamlfuse-%{version}-1.tar.gz
@@ -46,6 +46,8 @@ Summary(pl.UTF-8):	Wiązania ocamlfuse dla OCamla - cześć programistyczna
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %requires_eq	ocaml
+Requires:	libfuse-devel
+Requires:	ocaml-idl-devel >= 1.0.5
 
 %description devel
 This package contains files needed to develop OCaml programs using
