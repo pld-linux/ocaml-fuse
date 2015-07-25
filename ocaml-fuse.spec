@@ -1,13 +1,18 @@
 #
 # Conditional build:
-%bcond_without	opt		# build opt
+%bcond_without	ocaml_opt	# skip building native optimized binaries (bytecode is always built)
+
+# not yet available on x32 (ocaml 4.02.1), remove when upstream will support it
+%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9
+%undefine	with_ocaml_opt
+%endif
 
 %define		modname	Fuse
 Summary:	%{modname} binding for OCaml
 Summary(pl.UTF-8):	Wiązania %{modname} dla OCamla
 Name:		ocaml-fuse
 Version:	2.7
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/ocamlfuse/ocamlfuse-%{version}-1.tar.gz
@@ -62,7 +67,9 @@ tej biblioteki.
 mv ocamlfuse/* .
 
 %build
-%{__make} -j1 all -C lib \
+%{__make} -j1 -C lib \
+	byte-code-library \
+	%{?with_ocaml_opt:native-code-library} \
 	PACKS=camlidl \
 	CC="%{__cc} %{rpmcflags} -fPIC"
 
@@ -95,6 +102,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc LICENSE lib/*.mli
 %dir %{_libdir}/ocaml/%{modname}
-%{_libdir}/ocaml/%{modname}/*.cm[ixa]*
-%{_libdir}/ocaml/%{modname}/*.a
+%{_libdir}/ocaml/%{modname}/*.cma
+%{_libdir}/ocaml/%{modname}/*.cm[ix]
+%{_libdir}/ocaml/%{modname}/libFuse_stubs.a
+%if %{with ocaml_opt}
+%{_libdir}/ocaml/%{modname}/Fuse.a
+%{_libdir}/ocaml/%{modname}/*.cmxa
+%endif
 %{_libdir}/ocaml/site-lib/%{modname}
