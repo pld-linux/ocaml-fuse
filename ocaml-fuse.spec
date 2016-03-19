@@ -12,7 +12,7 @@ Summary:	%{modname} binding for OCaml
 Summary(pl.UTF-8):	Wiązania %{modname} dla OCamla
 Name:		ocaml-fuse
 Version:	2.7
-Release:	4
+Release:	5
 License:	GPL v2
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/ocamlfuse/ocamlfuse-%{version}-1.tar.gz
