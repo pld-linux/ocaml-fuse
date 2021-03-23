@@ -7,19 +7,20 @@
 %undefine	with_ocaml_opt
 %endif
 
-%define		modname	Fuse
-Summary:	%{modname} binding for OCaml
-Summary(pl.UTF-8):	Wiązania %{modname} dla OCamla
+%define		module	ocamlfuse
+Summary:	Fuse binding for OCaml
+Summary(pl.UTF-8):	Wiązania Fuse dla OCamla
 Name:		ocaml-fuse
-Version:	2.7
-Release:	6
+Version:	2.7.1
+Release:	1
 License:	GPL v2
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/ocamlfuse/ocamlfuse-%{version}-1.tar.gz
-# Source0-md5:	cb9cbe4fafb36ead1b78faaacc26f3e3
+Source0:	https://github.com/astrada/ocamlfuse/archive/v%{version}_cvs7/ocamlfuse-%{version}-7.tar.gz
+# Source0-md5:	a5da871a0983b6723c6b9b735898fe34
 URL:		http://sourceforge.net/apps/mediawiki/ocamlfuse/
 BuildRequires:	libfuse-devel
 BuildRequires:	ocaml >= 3.08
+BuildRequires:	ocaml-dune
 BuildRequires:	ocaml-findlib >= 1.4
 BuildRequires:	ocaml-idl-devel >= 1.0.5
 %requires_eq	ocaml-runtime
@@ -63,50 +64,39 @@ Pakiet ten zawiera pliki niezbędne do tworzenia programów używających
 tej biblioteki.
 
 %prep
-%setup -qc
-mv ocamlfuse/* .
+%setup -q -n ocamlfuse-2.7.1_cvs7
 
 %build
-%{__make} -j1 -C lib \
-	byte-code-library \
-	%{?with_ocaml_opt:native-code-library} \
-	PACKS=camlidl \
-	CC="%{__cc} %{rpmcflags} -fPIC"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-cd lib
 
-install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/{%{modname},stublibs}
-install -p *.cm[ixa]* *.a $RPM_BUILD_ROOT%{_libdir}/ocaml/%{modname}
-install -p dll*.so $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs
-
-install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/%{modname}
-cat > $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/%{modname}/META <<EOF
-requires = ""
-version = "%{version}"
-directory = "+%{modname}"
-archive(byte) = "%{modname}.cma"
-archive(native) = "%{modname}.cmxa"
-linkopts = ""
-EOF
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%{_libdir}/ocaml/%{module}/META
+%{_libdir}/ocaml/%{module}/dune-package
+%{_libdir}/ocaml/%{module}/opam
+%{_libdir}/ocaml/%{module}/*.cmi
+%{_libdir}/ocaml/%{module}/*.cmt
+%{_libdir}/ocaml/%{module}/*.cmti
+%{_libdir}/ocaml/%{module}/*.cmxs
 %attr(755,root,root) %{_libdir}/ocaml/stublibs/*.so
 
 %files devel
 %defattr(644,root,root,755)
 %doc LICENSE lib/*.mli
-%dir %{_libdir}/ocaml/%{modname}
-%{_libdir}/ocaml/%{modname}/*.cma
-%{_libdir}/ocaml/%{modname}/*.cm[ix]
-%{_libdir}/ocaml/%{modname}/libFuse_stubs.a
+%dir %{_libdir}/ocaml/%{module}
+%{_libdir}/ocaml/%{module}/*.cma
+%{_libdir}/ocaml/%{module}/*.cm[ix]
+%{_libdir}/ocaml/%{module}/*.a
+%{_libdir}/ocaml/%{module}/*.mli
 %if %{with ocaml_opt}
-%{_libdir}/ocaml/%{modname}/Fuse.a
-%{_libdir}/ocaml/%{modname}/*.cmxa
+%{_libdir}/ocaml/%{module}/*.cmxa
 %endif
-%{_libdir}/ocaml/site-lib/%{modname}
