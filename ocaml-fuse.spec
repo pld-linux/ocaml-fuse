@@ -86,7 +86,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/ocaml/%{module}/*.cmi
 %{_libdir}/ocaml/%{module}/*.cmt
 %{_libdir}/ocaml/%{module}/*.cmti
+%if %{with ocaml_opt}
 %{_libdir}/ocaml/%{module}/*.cmxs
+%endif
 %attr(755,root,root) %{_libdir}/ocaml/stublibs/*.so
 
 %files devel
