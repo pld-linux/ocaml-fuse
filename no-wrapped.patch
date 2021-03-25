@@ -3,7 +3,7 @@
 @@ -1,6 +1,7 @@
  (library
   (name fuse)
-  (public_name Fuse)
+  (public_name ocamlfuse)
 + (wrapped false)
   (libraries unix threads bigarray camlidl)
   (flags -thread)
