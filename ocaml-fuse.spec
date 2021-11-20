@@ -12,7 +12,7 @@ Summary:	Fuse binding for OCaml
 Summary(pl.UTF-8):	Wiązania Fuse dla OCamla
 Name:		ocaml-fuse
 Version:	2.7.1
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		Libraries
 #Source0Download: https://github.com/astrada/ocamlfuse/releases
