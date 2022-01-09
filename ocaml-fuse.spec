@@ -61,7 +61,7 @@ Główne cechy ocamlfuse to:
 
 %package devel
 Summary:	ocamlfuse binding for OCaml - development part
-Summary(pl.UTF-8):	Wiązania ocamlfuse dla OCamla - cześć programistyczna
+Summary(pl.UTF-8):	Wiązania ocamlfuse dla OCamla - część programistyczna
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %requires_eq	ocaml
