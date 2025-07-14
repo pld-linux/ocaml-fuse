@@ -78,7 +78,7 @@ używających biblioteki Fuse.
 
 %prep
 %setup -q -n ocamlfuse-2.7.1_cvs7
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 %{__make}
