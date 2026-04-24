@@ -92,7 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 # sources
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/ocaml/%{module}/*.ml
 # LICENSE is generic GPLv2 text, README.md packaged as %doc
-%{__rm} -r $RPM_BUILD_ROOT%{_prefix}/doc/%{module}
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{module}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
