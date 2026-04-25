@@ -11,14 +11,13 @@
 Summary:	Fuse binding for OCaml
 Summary(pl.UTF-8):	Wiązania Fuse dla OCamla
 Name:		ocaml-fuse
-Version:	2.7.1
-Release:	5
+Version:	2.7.2
+Release:	1
 License:	GPL v2
 Group:		Libraries
 #Source0Download: https://github.com/astrada/ocamlfuse/releases
-Source0:	https://github.com/astrada/ocamlfuse/archive/v%{version}_cvs7/ocamlfuse-%{version}-7.tar.gz
-# Source0-md5:	a5da871a0983b6723c6b9b735898fe34
-Patch0:		no-wrapped.patch
+Source0:	https://github.com/astrada/ocamlfuse/archive/v%{version}/ocamlfuse-%{version}.tar.gz
+# Source0-md5:	84c010f8103706dc84b00ab92d205155
 URL:		https://github.com/astrada/ocamlfuse
 BuildRequires:	libfuse-devel >= 2.7
 BuildRequires:	ocaml >= 1:4.02.3
@@ -77,8 +76,7 @@ Pakiet ten zawiera pliki niezbędne do tworzenia programów w OCamlu,
 używających biblioteki Fuse.
 
 %prep
-%setup -q -n ocamlfuse-2.7.1_cvs7
-%patch -P0 -p1
+%setup -q -n ocamlfuse-%{version}
 
 %build
 %{__make}
@@ -107,9 +105,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/ocaml/%{module}/*.cmxs
 %endif
 %attr(755,root,root) %{_libdir}/ocaml/stublibs/dllfuse_stubs.so
+%dir %{_libdir}/ocaml/conf-libfuse
+%{_libdir}/ocaml/conf-libfuse/META
 
 %files devel
 %defattr(644,root,root,755)
+%{_libdir}/ocaml/conf-libfuse/dune-package
+%{_libdir}/ocaml/conf-libfuse/opam
 %{_libdir}/ocaml/%{module}/dune-package
 %{_libdir}/ocaml/%{module}/opam
 %{_libdir}/ocaml/%{module}/*.cmi
